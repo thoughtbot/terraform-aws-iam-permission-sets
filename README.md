@@ -9,7 +9,6 @@ Usage:
 
 ``` terraform
 module "permission_sets" {
-  source = "./modules/terraform-aws-iam-permission-sets"
   source = "github.com/thoughtbot/terraform-aws-iam-permission-sets?ref=VERSION"
 
   # Define your permission sets here. You can include managed policies as well
