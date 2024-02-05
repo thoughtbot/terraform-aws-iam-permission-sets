@@ -16,11 +16,12 @@ variable "group_assignments" {
 variable "permission_sets" {
   description = "Permission sets which should be defined by this module"
   type = list(object({
-    description      = string,
-    inline_policy    = optional(string),
-    managed_policies = list(string),
-    name             = string,
-    relay_state      = optional(string),
-    session_duration = optional(string),
+    description               = string,
+    inline_policy             = optional(string),
+    managed_policies          = optional(list(string), []),
+    customer_managed_policies = optional(list(string), []),
+    name                      = string,
+    relay_state               = optional(string),
+    session_duration          = optional(string),
   }))
 }
