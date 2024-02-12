@@ -53,6 +53,23 @@ locals {
     local.managed_policies[*].id,
     local.managed_policies
   )
+
+  customer_managed_policies = flatten([
+    for permission_set in var.permission_sets :
+    [
+      for policy in permission_set.customer_managed_policies :
+      {
+        id                  = join("/", [permission_set.name, policy])
+        permission_set_name = permission_set.name
+        policy_name         = policy
+      }
+    ]
+  ])
+
+  customer_managed_policy_map = zipmap(
+    local.customer_managed_policies[*].id,
+    local.customer_managed_policies
+  )
 }
 
 resource "aws_ssoadmin_permission_set" "this" {
@@ -71,6 +88,18 @@ resource "aws_ssoadmin_managed_policy_attachment" "this" {
   instance_arn       = local.sso_instance
   managed_policy_arn = each.value.policy_arn
   permission_set_arn = aws_ssoadmin_permission_set.this[each.value.permission_set_name].arn
+}
+
+resource "aws_ssoadmin_customer_managed_policy_attachment" "this" {
+  for_each = local.customer_managed_policy_map
+
+  instance_arn       = local.sso_instance
+  permission_set_arn = aws_ssoadmin_permission_set.this[each.value.permission_set_name].arn
+
+  customer_managed_policy_reference {
+    name = each.value.policy_name
+    path = "/"
+  }
 }
 
 resource "aws_ssoadmin_permission_set_inline_policy" "this" {

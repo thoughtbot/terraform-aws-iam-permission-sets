@@ -70,6 +70,7 @@ No modules.
 | Name | Type |
 |------|------|
 | [aws_ssoadmin_account_assignment.groups](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_account_assignment) | resource |
+| [aws_ssoadmin_customer_managed_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_customer_managed_policy_attachment) | resource |
 | [aws_ssoadmin_managed_policy_attachment.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_managed_policy_attachment) | resource |
 | [aws_ssoadmin_permission_set.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set) | resource |
 | [aws_ssoadmin_permission_set_inline_policy.this](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/ssoadmin_permission_set_inline_policy) | resource |
@@ -83,7 +84,7 @@ No modules.
 | <a name="input_account_ids"></a> [account\_ids](#input\_account\_ids) | Account ID for each account name referenced in an assignment | `map(string)` | n/a | yes |
 | <a name="input_default_session_duration"></a> [default\_session\_duration](#input\_default\_session\_duration) | Session duration for permission sets without an explicit value | `string` | n/a | yes |
 | <a name="input_group_assignments"></a> [group\_assignments](#input\_group\_assignments) | Permission sets to be assigned to each group and account | `map(map(list(string)))` | n/a | yes |
-| <a name="input_permission_sets"></a> [permission\_sets](#input\_permission\_sets) | Permission sets which should be defined by this module | <pre>list(object({<br>    description      = string,<br>    inline_policy    = optional(string),<br>    managed_policies = list(string),<br>    name             = string,<br>    relay_state      = optional(string),<br>    session_duration = optional(string),<br>  }))</pre> | n/a | yes |
+| <a name="input_permission_sets"></a> [permission\_sets](#input\_permission\_sets) | Permission sets which should be defined by this module | <pre>list(object({<br>    description               = string,<br>    inline_policy             = optional(string),<br>    managed_policies          = optional(list(string), []),<br>    customer_managed_policies = optional(list(string), []),<br>    name                      = string,<br>    relay_state               = optional(string),<br>    session_duration          = optional(string),<br>  }))</pre> | n/a | yes |
 
 ## Outputs
 
