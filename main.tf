@@ -79,7 +79,7 @@ resource "aws_ssoadmin_permission_set" "this" {
   description      = each.value.description
   instance_arn     = local.sso_instance
   relay_state      = each.value.relay_state
-  session_duration = coalesce(each.value.relay_state, var.default_session_duration)
+  session_duration = coalesce(each.value.session_duration, var.default_session_duration)
 }
 
 resource "aws_ssoadmin_managed_policy_attachment" "this" {
